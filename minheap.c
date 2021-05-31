@@ -32,7 +32,9 @@ void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *
         return;
     }
 
-    heap->elements[heap->heap_size] = data;
+    heap->elements[heap->heap_size] = malloc(sizeof(void *));
+    memcpy(heap->elements[heap->heap_size], data, size);
+
     heap->heap_size++;
 
     // percolate up
@@ -40,6 +42,9 @@ void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *
     int parent = (heap->heap_size - 2) / 2;
 
     while ((*compar)(heap->elements[child], heap->elements[parent]) < 0) {
+        int* v1 = (int * )heap->elements[child];
+        int* v2 = (int * )heap->elements[parent];
+
         swap(heap->elements[child], heap->elements[parent], size);
         child = parent;
         parent = (parent - 1) / 2;

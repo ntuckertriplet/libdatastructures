@@ -64,11 +64,22 @@ int main(int argc, char **argv) {
     p = &to_add;
     heap_add(heap, p, sizeof(int), int_comp);
 
+    to_add = 5;
+    p = &to_add;
+    heap_add(heap, p, sizeof(int), int_comp);
+
+    to_add = 20;
+    p = &to_add;
+    heap_add(heap, p, sizeof(int), int_comp);
+
+    to_add = 4;
+    p = &to_add;
+    heap_add(heap, p, sizeof(int), int_comp);
+
     printf("HEAP SIZE IS %d\n", heap->heap_size);
 
     for (int i = 0; i < heap->heap_size; i++) {
-        int* val2 = (int *)heap->elements[i];
-        printf("%d\n", (*val2));
+        printf("%d\n", (*(int * )heap->elements[i]));
     }
 
     return 0;
