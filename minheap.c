@@ -15,6 +15,26 @@ void swap(void * a, void * b, size_t len)
     }
 }
 
+void percolate_down(minheap* heap, int index, size_t size, int (*compar)(const void *, const void *)) {
+    if ((index * 2) + 1 >= heap->heap_size || (index * 2) + 2 >= heap->heap_size) {
+        return;
+    }
+
+    void* current = heap->elements[index];
+    void* left = heap->elements[(index * 2) + 1];
+    void* right = heap->elements[(index * 2) + 2];
+
+    if ((*compar)(current, left) > 0) {
+        swap(current, left, size);
+        percolate_down(heap, (index * 2) + 1, size, (*compar));
+    }
+
+    if ((*compar)(current, right) > 0) {
+        swap(current, right, size);
+        percolate_down(heap, (index * 2) + 2, size, (*compar));
+    }
+}
+
 int heap_size(minheap* heap) {
     if (heap == NULL) {
         return -1;
@@ -42,9 +62,6 @@ void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *
     int parent = (heap->heap_size - 2) / 2;
 
     while ((*compar)(heap->elements[child], heap->elements[parent]) < 0) {
-        int* v1 = (int * )heap->elements[child];
-        int* v2 = (int * )heap->elements[parent];
-
         swap(heap->elements[child], heap->elements[parent], size);
         child = parent;
         parent = (parent - 1) / 2;
@@ -57,4 +74,20 @@ void* get_min(minheap* heap) {
     }
 
     return heap->elements[0];
+}
+
+void* delete_min(minheap* heap, size_t size, int (*compar)(const void *, const void *)) {
+    if (heap == NULL) {
+        return NULL;
+    }
+
+    void* found = heap->elements[0];
+    swap(heap->elements[0], heap->elements[heap->heap_size - 1], size);
+
+    free(heap->elements[heap->heap_size - 1]);
+    heap->heap_size--;
+
+    percolate_down(heap, 0, size, *(*compar));
+
+    return found;
 }

@@ -4,6 +4,7 @@
 #include "linkedlist.h"
 #include "minheap.h"
 #include "comparator.h"
+#include "priorityqueue.h"
 
 int main(int argc, char **argv) {
 
@@ -82,5 +83,10 @@ int main(int argc, char **argv) {
         printf("%d\n", (*(int * )heap->elements[i]));
     }
 
+    delete_min(heap, sizeof(int), int_comp);
+    for (int i = 0; i < heap->heap_size; i++) {
+        printf("%d\n", (*(int * )heap->elements[i]));
+    }
+    
     return 0;
 }
