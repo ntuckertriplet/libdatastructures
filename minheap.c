@@ -43,6 +43,34 @@ int heap_size(minheap* heap) {
     return heap->heap_size;
 }
 
+void heap_add_all(minheap* heap, void** data, size_t size, int num_elems, int (*compar)(const void *, const void *)) {
+    if (heap == NULL) {
+        return;
+    }
+
+    if (heap->heap_size > 0) {
+        return;
+    }
+
+    if (num_elems > heap->capacity) {
+        return;
+    }
+
+    for (int i = 0; i < num_elems; i++) {
+        heap->elements[i] = malloc(sizeof(void *));
+        memcpy(heap->elements[i], data[i], size);
+    }
+
+    if (num_elems < 2) {
+        return;
+    }
+
+    int index = (num_elems - 2) / 2;
+    for (int i = index; i >= 0; i--) {
+        percolate_down(heap, i, size, (*compar));
+    }
+}
+
 void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *, const void *)) {
     if (heap == NULL) {
         return;
@@ -81,13 +109,15 @@ void* delete_min(minheap* heap, size_t size, int (*compar)(const void *, const v
         return NULL;
     }
 
-    void* found = heap->elements[0];
+    void* found = malloc(sizeof(void *));
+    memcpy(found, heap->elements[0], size);
+
     swap(heap->elements[0], heap->elements[heap->heap_size - 1], size);
 
     free(heap->elements[heap->heap_size - 1]);
     heap->heap_size--;
 
-    percolate_down(heap, 0, size, *(*compar));
+    percolate_down(heap, 0, size, (*compar));
 
     return found;
 }
