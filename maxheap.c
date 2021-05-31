@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "minheap.h"
+#include "maxheap.h"
 
 void swap(void * a, void * b, size_t len)
 {
@@ -24,12 +24,12 @@ void percolate_down(minheap* heap, int index, size_t size, int (*compar)(const v
     void* left = heap->elements[(index * 2) + 1];
     void* right = heap->elements[(index * 2) + 2];
 
-    if ((*compar)(current, left) > 0) {
+    if ((*compar)(current, left) < 0) {
         swap(current, left, size);
         percolate_down(heap, (index * 2) + 1, size, (*compar));
     }
 
-    if ((*compar)(current, right) > 0) {
+    if ((*compar)(current, right) < 0) {
         swap(current, right, size);
         percolate_down(heap, (index * 2) + 2, size, (*compar));
     }
@@ -89,14 +89,14 @@ void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *
     int child = heap->heap_size - 1;
     int parent = (heap->heap_size - 2) / 2;
 
-    while ((*compar)(heap->elements[child], heap->elements[parent]) < 0) {
+    while ((*compar)(heap->elements[child], heap->elements[parent]) > 0) {
         swap(heap->elements[child], heap->elements[parent], size);
         child = parent;
         parent = (parent - 1) / 2;
     }
 }
 
-void* get_min(minheap* heap) {
+void* get_max(minheap* heap) {
     if (heap == NULL) {
         return NULL;
     }
@@ -104,7 +104,7 @@ void* get_min(minheap* heap) {
     return heap->elements[0];
 }
 
-void* delete_min(minheap* heap, size_t size, int (*compar)(const void *, const void *)) {
+void* delete_max(minheap* heap, size_t size, int (*compar)(const void *, const void *)) {
     if (heap == NULL) {
         return NULL;
     }

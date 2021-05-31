@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "linkedlist.h"
-#include "minheap.h"
+#include "maxheap.h"
 #include "comparator.h"
 #include "priorityqueue.h"
 
@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
         printf("%d\n", (*(int * )heap->elements[i]));
     }
 
-    void* found = delete_min(heap, sizeof(int), int_comp);
+    void* found = delete_max(heap, sizeof(int), int_comp);
     printf("REMOVED %d\n", *(int * )found);
     for (int i = 0; i < heap->heap_size; i++) {
         printf("%d\n", (*(int * )heap->elements[i]));
