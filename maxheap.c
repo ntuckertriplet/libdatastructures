@@ -16,20 +16,19 @@ void swap(void * a, void * b, size_t len)
 }
 
 void percolate_down(minheap* heap, int index, size_t size, int (*compar)(const void *, const void *)) {
-    if ((index * 2) + 1 >= heap->heap_size || (index * 2) + 2 >= heap->heap_size) {
-        return;
-    }
+    int left_index = (index * 2) + 1;
+    int right_index = (index * 2) + 2;
 
     void* current = heap->elements[index];
-    void* left = heap->elements[(index * 2) + 1];
-    void* right = heap->elements[(index * 2) + 2];
+    void* left = heap->elements[left_index];
+    void* right = heap->elements[right_index];
 
-    if ((*compar)(current, left) < 0) {
+    if (left_index < heap->heap_size && (*compar)(current, left) < 0) {
         swap(current, left, size);
         percolate_down(heap, (index * 2) + 1, size, (*compar));
     }
 
-    if ((*compar)(current, right) < 0) {
+    if (right_index < heap->heap_size && (*compar)(current, right) < 0) {
         swap(current, right, size);
         percolate_down(heap, (index * 2) + 2, size, (*compar));
     }
@@ -80,7 +79,6 @@ void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *
         return;
     }
 
-    heap->elements[heap->heap_size] = malloc(sizeof(void *));
     memcpy(heap->elements[heap->heap_size], data, size);
 
     heap->heap_size++;

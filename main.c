@@ -1,60 +1,25 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "linkedlist.h"
 #include "maxheap.h"
 #include "comparator.h"
-#include "priorityqueue.h"
+#include "queue.h"
 
 int main(int argc, char **argv) {
-
-    node* list = malloc(sizeof(node));
-    list->data = NULL;
-    list->next = NULL;
-
-    int to_add = 5;
-    void* p = &to_add;
-
-    list_add(list, p, sizeof(int));
-    list_add(list, p, sizeof(int));
-    list_add(list, p, sizeof(int));
-    list_add(list, p, sizeof(int));
-
-    to_add = 6;
-    p = &to_add;
-
-    list_add(list, p, sizeof(int));
-
-    int look = 4;
-    void* p2 = &look;
-
-    int contain = contains(list, p, int_comp);
-    printf("%d\n", contain);
-
-    contain = contains(list, p2, int_comp);
-    printf("%d\n", contain);
-
-    node* cur_node = list;
-    while (cur_node != NULL) {
-        int* val = (int *)cur_node->data;
-        printf("%d\n", (*val));
-        cur_node = cur_node->next;
-    }
-
-    int* got = (int *)get(list, 4);
-    printf("%d\n", (*got));
-
     minheap* heap = malloc(sizeof(minheap));
     heap->capacity = 15;
     heap->heap_size = 0;
     heap->elements = malloc(sizeof(void *) * heap->capacity);
+    for (int i = 0; i < heap->capacity; i++) {
+        heap->elements[i] = malloc(sizeof(void *));
+    }
 
     printf("MADE THE HEAP\n");
 
-    heap_add(heap, p, sizeof(int), int_comp);
-
-    to_add = 7;
-    p = &to_add;
+    int to_add = 7;
+    void* p = &to_add;
     heap_add(heap, p, sizeof(int), int_comp);
 
     to_add = 16;
@@ -69,7 +34,7 @@ int main(int argc, char **argv) {
     p = &to_add;
     heap_add(heap, p, sizeof(int), int_comp);
 
-    to_add = 20;
+    to_add = 21;
     p = &to_add;
     heap_add(heap, p, sizeof(int), int_comp);
 
@@ -88,6 +53,51 @@ int main(int argc, char **argv) {
     for (int i = 0; i < heap->heap_size; i++) {
         printf("%d\n", (*(int * )heap->elements[i]));
     }
+
+    queue* q = malloc(sizeof(queue));
+    q->capacity = 15;
+    q->front = 0;
+    q->rear = 0;
+    q->size = 0;
+    q->elements = malloc(sizeof(void *) * q->capacity);
+    for (int i = 0; i < q->capacity; i++) {
+        q->elements[i] = malloc(sizeof(void *));
+    }
+
+    to_add = 4;
+    p = &to_add;
+    enqueue(q, p, sizeof(int));
+
+    to_add = 5;
+    p = &to_add;
+    enqueue(q, p, sizeof(int));
+
+    to_add = 7;
+    p = &to_add;
+    enqueue(q, p, sizeof(int));
+
+    to_add = 12;
+    p = &to_add;
+    enqueue(q, p, sizeof(int));
+
+    to_add = 1;
+    p = &to_add;
+    enqueue(q, p, sizeof(int));
+
+    void* found2 = dequeue(q, sizeof(int));
+    printf("%d\n", *(int * )found2);
+
+    found2 = dequeue(q, sizeof(int));
+    printf("%d\n", *(int * )found2);
+
+    found2 = dequeue(q, sizeof(int));
+    printf("%d\n", *(int * )found2);
+
+    found2 = dequeue(q, sizeof(int));
+    printf("%d\n", *(int * )found2);
+
+    found2 = dequeue(q, sizeof(int));
+    printf("%d\n", *(int * )found2);
 
     return 0;
 }

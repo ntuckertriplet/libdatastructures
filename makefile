@@ -1,6 +1,6 @@
 
 CFLAGS = -g -I. -Og -Wall
-DEPS = linkedlist.h maxheap.h comparator.h
+DEPS = linkedlist.h maxheap.h comparator.h queue.h
 EXEC_FILE = libdstruct
 
 all: $(EXEC_FILE)
@@ -8,7 +8,7 @@ all: $(EXEC_FILE)
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(EXEC_FILE): main.o linkedlist.o maxheap.o comparator.o
+$(EXEC_FILE): main.o linkedlist.o maxheap.o comparator.o queue.o
 	$(CC) $^ -o libdstruct
 
 clean:
