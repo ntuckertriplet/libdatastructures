@@ -56,7 +56,7 @@ void heap_add_all(minheap* heap, void** data, size_t size, int num_elems, int (*
     }
 
     for (int i = 0; i < num_elems; i++) {
-        heap->elements[i] = malloc(sizeof(void *));
+        heap->elements[i] = malloc(size);
         memcpy(heap->elements[i], data[i], size);
     }
 
