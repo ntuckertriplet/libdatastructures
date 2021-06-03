@@ -97,7 +97,7 @@ tree_node* _delete(tree_node* root, void* data, size_t size, int (*compar)(const
             return temp;
         } else {
             tree_node* temp = _find_minimum(root->right);
-            temp->data = malloc(sizeof(size));
+            temp->data = malloc(size);
             memcpy(temp->data, root->data, size);
             root->right = _delete(root->right, temp->data, size, (*compar));
         }
@@ -133,7 +133,7 @@ tree_node* delete(bst* tree, void* data, size_t size, int (*compar)(const void *
 tree_node* _insert(tree_node* root, void* data, size_t size, int (*compar)(const void *, const void*)) {
     if (root == NULL) {
         tree_node* new = malloc(sizeof(tree_node));
-        new->data = malloc(sizeof(data));
+        new->data = malloc(size);
         memcpy(new->data, data, size);
         return new;
     } else if ((*compar)(root->data, data) < 0) {
