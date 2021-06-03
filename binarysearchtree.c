@@ -133,7 +133,7 @@ tree_node* delete(bst* tree, void* data, size_t size, int (*compar)(const void *
 tree_node* _insert(tree_node* root, void* data, size_t size, int (*compar)(const void *, const void*)) {
     if (root == NULL) {
         tree_node* new = malloc(sizeof(tree_node));
-        new->data = malloc(sizeof(data));
+        new->data = malloc(size);
         memcpy(new->data, data, size);
         return new;
     } else if ((*compar)(root->data, data) < 0) {
