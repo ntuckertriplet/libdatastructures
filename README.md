@@ -15,7 +15,7 @@ heap->capacity = 15;
 heap->heap_size = 0;
 heap->elements = malloc(sizeof(void *) * heap->capacity);
 for (int i = 0; i < heap->capacity; i++) {
-    heap->elements[i] = malloc(sizeof(size));
+    heap->elements[i] = malloc(size);
 }
 ```
 
