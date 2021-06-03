@@ -24,9 +24,7 @@ This is a heap with a capacity of 15 (TODO arbitraty size with realloc). Notice 
 Usage of a linked list follows less of a manual approach, as creating and adding to a linked list is as simple as 
 
 ```c
-node* list = malloc(sizeof(node));
-list->data = NULL;
-list->next = NULL;
+linked_list* list = malloc(sizeof(linked_list));
 
 int to_add = 5;
 void* p = &to_add;
@@ -34,22 +32,26 @@ void* p = &to_add;
 list_add(list, p, sizeof(int));
 ```
 
-A head node is created, and the head is passed in to a list_add, the pointer to the data to add, and the size of the data at that particular pointer. For your use case, you may send a different data size and you can add a custom struct. You can add whatever you want really, it's just a `void *`.
+A list is created, and it is passed in to a list_add with the pointer to the data to add, and the size of the data at that particular pointer. For your use case, you may send a different data size and you can add a custom struct. You can add whatever you want really, it's just a `void *`.
 
 Remember though, if the `size_t` parameter is wrong, it could very well fail. If it is smaller than the size of what you pass in it should be alright, but anything larger and you will run into issues. Again, you have been warned!
 
 ## TODO
 - [ ] Test the linking of the lib
 - [x] Linked List
-    - [ ] Add wrapper class for list, abstract it out slightly
+    - [x] Add wrapper class for list, abstract it out slightly
 - [x] Binary Search Tree
 - [x] Max Heap (and by extension, Priority Queue)
     - [ ] Heaps of arbitraty capacity
-- [ ] Binary Search Tree (TODO TESTS)
+- [x] Binary Search Tree
+    - [ ] NEEDS TESTING
 - [ ] Hash Table/Hash Map
-- [ ] Stack
+- [x] Stack
+    - [ ] NEEDS TESTING
+    - [ ] Stacks of arbitrary capacity
 - [ ] Directed Graph
 - [ ] Undirected Graph
+- [ ] Init methods for various structures
 
 # Contributing
 At the moment I am not accepting contributions, as this is meant to be a learning opportunity for me. However, once done, if anyone really wants to, this portion of the README will be changed and I will accept contributions. I don't imagine anyone will use this, but you are absolutely welcome to use the library if you so choose!

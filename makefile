@@ -1,6 +1,6 @@
 
 CFLAGS = -g -I. -Og -Wall
-DEPS = linkedlist.h maxheap.h comparator.h queue.h binarysearchtree.h
+DEPS = linkedlist.h maxheap.h comparator.h queue.h binarysearchtree.h stack.h
 EXEC_FILE = libdstruct
 LIB = libdata.a
 
@@ -9,7 +9,7 @@ all: $(EXEC_FILE)
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(EXEC_FILE): main.o linkedlist.o maxheap.o comparator.o queue.o binarysearchtree.o
+$(EXEC_FILE): main.o linkedlist.o maxheap.o comparator.o queue.o binarysearchtree.o stack.o
 	$(CC) $^ -o libdstruct
 
 lib: linkedlist.o maxheap.o comparator.o queue.o binarysearchtree.o
