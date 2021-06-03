@@ -4,10 +4,17 @@
 
 #include "maxheap.h"
 
-void swap(void * a, void * b, size_t len)
+/**
+ * Swap the data at two pointers
+ * 
+ * @param a pointer 1 to swap
+ * @param b pointer 2 to swap
+ * @param size the size of the data to swap
+ */ 
+void swap(void * a, void * b, size_t size)
 {
     unsigned char * p = a, * q = b, tmp;
-    for (size_t i = 0; i != len; ++i)
+    for (size_t i = 0; i != size; ++i)
     {
         tmp = p[i];
         p[i] = q[i];
@@ -15,7 +22,15 @@ void swap(void * a, void * b, size_t len)
     }
 }
 
-void percolate_down(minheap* heap, int index, size_t size, int (*compar)(const void *, const void *)) {
+/**
+ * Internal method to percolate down in the heap.
+ * 
+ * @param heap the heap to start the percolating at
+ * @param index the index at which the percolate begins
+ * @param size the size_t of the data in the heap
+ * @param *compar a function pointer to a comparator
+ */
+void _percolate_down(minheap* heap, int index, size_t size, int (*compar)(const void *, const void *)) {
     int left_index = (index * 2) + 1;
     int right_index = (index * 2) + 2;
 
@@ -25,15 +40,22 @@ void percolate_down(minheap* heap, int index, size_t size, int (*compar)(const v
 
     if (left_index < heap->heap_size && (*compar)(current, left) < 0) {
         swap(current, left, size);
-        percolate_down(heap, (index * 2) + 1, size, (*compar));
+        _percolate_down(heap, (index * 2) + 1, size, (*compar));
     }
 
     if (right_index < heap->heap_size && (*compar)(current, right) < 0) {
         swap(current, right, size);
-        percolate_down(heap, (index * 2) + 2, size, (*compar));
+        _percolate_down(heap, (index * 2) + 2, size, (*compar));
     }
 }
 
+/**
+ * Returns the number of elements in the heap
+ * 
+ * @param heap the heap to get the size of
+ * 
+ * @returns an integer number of elements in the heap
+ */ 
 int heap_size(minheap* heap) {
     if (heap == NULL) {
         return -1;
@@ -42,6 +64,19 @@ int heap_size(minheap* heap) {
     return heap->heap_size;
 }
 
+/**
+ * Insert an array of items the heap, maintaining heap order.
+ * Duplicates are allowed.
+ * 
+ * NOTE: I believe can only be done once at the initializtion.
+ *       After the heap is made and added to, this is no longer callable
+ * 
+ * @param heap the heap to add to
+ * @param data the *void[] containing the data in a void* array
+ * @param size the size_t of the added data
+ * @param num_elems the number of elements being added
+ * @param compar the custom comparator for the data
+ */
 void heap_add_all(minheap* heap, void** data, size_t size, int num_elems, int (*compar)(const void *, const void *)) {
     if (heap == NULL) {
         return;
@@ -66,10 +101,19 @@ void heap_add_all(minheap* heap, void** data, size_t size, int num_elems, int (*
 
     int index = (num_elems - 2) / 2;
     for (int i = index; i >= 0; i--) {
-        percolate_down(heap, i, size, (*compar));
+        _percolate_down(heap, i, size, (*compar));
     }
 }
 
+/**
+ * Insert into the heap, maintaining heap order.
+ * Duplicates are allowed.
+ * 
+ * @param heap the heap to add to
+ * @param data the void* containing the data
+ * @param size the size_t of the added data
+ * @param compar the custom comparator for the data
+ */
 void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *, const void *)) {
     if (heap == NULL) {
         return;
@@ -102,6 +146,15 @@ void* get_max(minheap* heap) {
     return heap->elements[0];
 }
 
+/**
+ * Remove the largest item from the heap
+ * 
+ * @param heap the heap to remove the item from
+ * @param size the size_t of the data in the heap
+ * @param compar the custom comparator for the data
+ * 
+ * @return the largest item in a void *
+ */
 void* delete_max(minheap* heap, size_t size, int (*compar)(const void *, const void *)) {
     if (heap == NULL) {
         return NULL;
@@ -115,7 +168,7 @@ void* delete_max(minheap* heap, size_t size, int (*compar)(const void *, const v
     free(heap->elements[heap->heap_size - 1]);
     heap->heap_size--;
 
-    percolate_down(heap, 0, size, (*compar));
+    _percolate_down(heap, 0, size, (*compar));
 
     return found;
 }

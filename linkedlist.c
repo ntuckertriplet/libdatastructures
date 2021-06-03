@@ -4,6 +4,13 @@
 
 #include "linkedlist.h"
 
+/**
+ * Add item to the list
+ * 
+ * @param head the head node of the linked list
+ * @param data the data in a void * to add
+ * @param size the size_t of the data to add
+ */ 
 void list_add(node* head, void* data, size_t size) {
     if (head->data == NULL) {
         head->data = malloc(size);
@@ -24,6 +31,14 @@ void list_add(node* head, void* data, size_t size) {
     cur_node->next = to_add;
 }
 
+/**
+ * Get an item in the list at the index provided
+ * 
+ * @param head the head of the linked list
+ * @param index the index to retreive from
+ * 
+ * @returns void * containing the data or NULL of the index is not valid
+ */ 
 void* get(node* head, int index) {
     if (head == NULL) {
         return NULL;
@@ -44,6 +59,15 @@ void* get(node* head, int index) {
     return NULL;
 }
 
+/**
+ * Determine if the list contains a particular value
+ * 
+ * @param head the head of the linked list
+ * @param data the void* data to check if it is in the linked list
+ * @param compar* a custom comparator to be passed in
+ * 
+ * @returns 1 if the list contains the data, 0 if not
+ */
 int contains(node* head, void* data, int (*compar)(const void *, const void *)) {
     if (head == NULL) {
         return -1;
@@ -61,6 +85,15 @@ int contains(node* head, void* data, int (*compar)(const void *, const void *)) 
     return -1;
 }
 
+/**
+ * Get the index of particular data
+ * 
+ * @param head the head of the linked list
+ * @param data the void* data to check the index of
+ * @param compar* a custom comparator to be passed in
+ * 
+ * @returns the index of the data, or -1 if not in the list
+ */
 int index_of(node* head, void* data, int (*compar)(const void *, const void*)) {
     if (head == NULL || data == NULL) {
         return -1;
