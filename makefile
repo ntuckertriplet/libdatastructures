@@ -2,7 +2,7 @@
 CFLAGS = -g -I. -Og -Wall
 DEPS = linkedlist.h maxheap.h comparator.h queue.h binarysearchtree.h
 EXEC_FILE = libdstruct
-LIB = libdata
+LIB = libdata.a
 
 all: $(EXEC_FILE)
 
@@ -16,4 +16,4 @@ lib: linkedlist.o maxheap.o comparator.o queue.o binarysearchtree.o
 	ar rcs $(LIB) $^
 
 clean:
-	rm -f *.o libdstruct
+	rm -f *.o *.a libdstruct
