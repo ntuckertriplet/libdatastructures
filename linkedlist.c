@@ -10,21 +10,24 @@
  * @param head the head node of the linked list
  * @param data the data in a void * to add
  * @param size the size_t of the data to add
- */ 
-void _list_add(node* head, void* data, size_t size) {
-    if (head->data == NULL) {
+ */
+void _list_add(node *head, void *data, size_t size)
+{
+    if (head->data == NULL)
+    {
         head->data = malloc(size);
         memcpy(head->data, data, size);
         return;
     }
 
-    node* to_add = malloc(sizeof(node));
+    node *to_add = malloc(sizeof(node));
     to_add->data = malloc(size);
     memcpy(to_add->data, data, size);
     to_add->next = NULL;
 
-    node* cur_node = head;
-    while (cur_node->next != NULL) {
+    node *cur_node = head;
+    while (cur_node->next != NULL)
+    {
         cur_node = cur_node->next;
     }
 
@@ -37,12 +40,14 @@ void _list_add(node* head, void* data, size_t size) {
  * @param list the list to add to
  * @param data the data in a void * to add
  * @param size the size_t of the data to add
- */ 
-void list_add(linked_list* list, void* data, size_t size) {
-    if (list->head == NULL) {
+ */
+void list_add(linked_list *list, void *data, size_t size)
+{
+    if (list->head == NULL)
+    {
         list->head = malloc(sizeof(node));
     }
-    
+
     _list_add(list->head, data, size);
     list->size++;
 }
@@ -54,17 +59,21 @@ void list_add(linked_list* list, void* data, size_t size) {
  * @param index the index to retreive from
  * 
  * @returns void * containing the data or NULL of the index is not valid
- */ 
-void* _get(node* head, int index) {
-    if (head == NULL) {
+ */
+void *_get(node *head, int index)
+{
+    if (head == NULL)
+    {
         return NULL;
     }
 
     int i = 0;
-    node* cur_node = head;
+    node *cur_node = head;
 
-    while (cur_node != NULL) {
-        if (i == index) {
+    while (cur_node != NULL)
+    {
+        if (i == index)
+        {
             return cur_node->data;
         }
 
@@ -82,8 +91,9 @@ void* _get(node* head, int index) {
  * @param index the index to retreive from
  * 
  * @returns void * containing the data or NULL of the index is not valid
- */ 
-void* get(linked_list* list, int index) {
+ */
+void *get(linked_list *list, int index)
+{
     return _get(list->head, index);
 }
 
@@ -96,14 +106,18 @@ void* get(linked_list* list, int index) {
  * 
  * @returns 1 if the list contains the data, 0 if not
  */
-int _contains(node* head, void* data, int (*compar)(const void *, const void *)) {
-    if (head == NULL) {
+int _contains(node *head, void *data, int (*compar)(const void *, const void *))
+{
+    if (head == NULL)
+    {
         return -1;
     }
 
-    node* cur_node = head;
-    while (cur_node != NULL) {
-        if ((*compar)(cur_node->data, data) == 0) {
+    node *cur_node = head;
+    while (cur_node != NULL)
+    {
+        if ((*compar)(cur_node->data, data) == 0)
+        {
             return 1;
         }
 
@@ -122,7 +136,8 @@ int _contains(node* head, void* data, int (*compar)(const void *, const void *))
  * 
  * @returns 1 if the list contains the data, 0 if not
  */
-int contains(linked_list* list, void* data, int (*compar)(const void *, const void*)) {
+int contains(linked_list *list, void *data, int (*compar)(const void *, const void *))
+{
     return _contains(list->head, data, (*compar));
 }
 
@@ -135,15 +150,19 @@ int contains(linked_list* list, void* data, int (*compar)(const void *, const vo
  * 
  * @returns the index of the data, or -1 if not in the list
  */
-int _index_of(node* head, void* data, int (*compar)(const void *, const void*)) {
-    if (head == NULL || data == NULL) {
+int _index_of(node *head, void *data, int (*compar)(const void *, const void *))
+{
+    if (head == NULL || data == NULL)
+    {
         return -1;
     }
-    
+
     int i = 0;
-    node* cur_node = head;
-    while(cur_node != NULL) {
-        if ((*compar)(cur_node->data, data) == 0) {
+    node *cur_node = head;
+    while (cur_node != NULL)
+    {
+        if ((*compar)(cur_node->data, data) == 0)
+        {
             return i;
         }
 
@@ -163,6 +182,7 @@ int _index_of(node* head, void* data, int (*compar)(const void *, const void*)) 
  * 
  * @returns the index of the data, or -1 if not in the list
  */
-int index_of(linked_list* list, void* data, int (*compar)(const void *, const void*)) {
+int index_of(linked_list *list, void *data, int (*compar)(const void *, const void *))
+{
     return _index_of(list->head, data, (*compar));
 }

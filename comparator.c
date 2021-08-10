@@ -9,10 +9,11 @@
  * 
  * @returns an integer that is negative if p1 is smaller, positive if p2 is smaller, 
  *          or 0 if they are equal
- */ 
-int int_comp(const void* p1, const void* p2) {
-    int x = *(int *) p1;
-    int y = *(int *) p2;
+ */
+int int_comp(const void *p1, const void *p2)
+{
+    int x = *(int *)p1;
+    int y = *(int *)p2;
     return x - y;
 }
 
@@ -25,9 +26,10 @@ int int_comp(const void* p1, const void* p2) {
  * 
  * @returns an integer that is negative if p1 is smaller, positive if p2 is smaller, 
  *          or 0 if they are equal
- */ 
-int float_comp(const void* p1, const void* p2) {
-    float x = *(float *) p1;
-    float y = *(float *) p2;
+ */
+int float_comp(const void *p1, const void *p2)
+{
+    float x = *(float *)p1;
+    float y = *(float *)p2;
     return x - y;
 }

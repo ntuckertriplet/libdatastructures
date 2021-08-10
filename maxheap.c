@@ -10,10 +10,10 @@
  * @param a pointer 1 to swap
  * @param b pointer 2 to swap
  * @param size the size of the data to swap
- */ 
-void swap(void * a, void * b, size_t size)
+ */
+void swap(void *a, void *b, size_t size)
 {
-    unsigned char * p = a, * q = b, tmp;
+    unsigned char *p = a, *q = b, tmp;
     for (size_t i = 0; i != size; ++i)
     {
         tmp = p[i];
@@ -30,20 +30,23 @@ void swap(void * a, void * b, size_t size)
  * @param size the size_t of the data in the heap
  * @param *compar a function pointer to a comparator
  */
-void _percolate_down(minheap* heap, int index, size_t size, int (*compar)(const void *, const void *)) {
+void _percolate_down(minheap *heap, int index, size_t size, int (*compar)(const void *, const void *))
+{
     int left_index = (index * 2) + 1;
     int right_index = (index * 2) + 2;
 
-    void* current = heap->elements[index];
-    void* left = heap->elements[left_index];
-    void* right = heap->elements[right_index];
+    void *current = heap->elements[index];
+    void *left = heap->elements[left_index];
+    void *right = heap->elements[right_index];
 
-    if (left_index < heap->heap_size && (*compar)(current, left) < 0) {
+    if (left_index < heap->heap_size && (*compar)(current, left) < 0)
+    {
         swap(current, left, size);
         _percolate_down(heap, (index * 2) + 1, size, (*compar));
     }
 
-    if (right_index < heap->heap_size && (*compar)(current, right) < 0) {
+    if (right_index < heap->heap_size && (*compar)(current, right) < 0)
+    {
         swap(current, right, size);
         _percolate_down(heap, (index * 2) + 2, size, (*compar));
     }
@@ -55,9 +58,11 @@ void _percolate_down(minheap* heap, int index, size_t size, int (*compar)(const 
  * @param heap the heap to get the size of
  * 
  * @returns an integer number of elements in the heap
- */ 
-int heap_size(minheap* heap) {
-    if (heap == NULL) {
+ */
+int heap_size(minheap *heap)
+{
+    if (heap == NULL)
+    {
         return -1;
     }
 
@@ -77,30 +82,37 @@ int heap_size(minheap* heap) {
  * @param num_elems the number of elements being added
  * @param compar the custom comparator for the data
  */
-void heap_add_all(minheap* heap, void** data, size_t size, int num_elems, int (*compar)(const void *, const void *)) {
-    if (heap == NULL) {
+void heap_add_all(minheap *heap, void **data, size_t size, int num_elems, int (*compar)(const void *, const void *))
+{
+    if (heap == NULL)
+    {
         return;
     }
 
-    if (heap->heap_size > 0) {
+    if (heap->heap_size > 0)
+    {
         return;
     }
 
-    if (num_elems > heap->capacity) {
+    if (num_elems > heap->capacity)
+    {
         return;
     }
 
-    for (int i = 0; i < num_elems; i++) {
+    for (int i = 0; i < num_elems; i++)
+    {
         heap->elements[i] = malloc(size);
         memcpy(heap->elements[i], data[i], size);
     }
 
-    if (num_elems < 2) {
+    if (num_elems < 2)
+    {
         return;
     }
 
     int index = (num_elems - 2) / 2;
-    for (int i = index; i >= 0; i--) {
+    for (int i = index; i >= 0; i--)
+    {
         _percolate_down(heap, i, size, (*compar));
     }
 }
@@ -114,12 +126,15 @@ void heap_add_all(minheap* heap, void** data, size_t size, int num_elems, int (*
  * @param size the size_t of the added data
  * @param compar the custom comparator for the data
  */
-void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *, const void *)) {
-    if (heap == NULL) {
+void heap_add(minheap *heap, void *data, size_t size, int (*compar)(const void *, const void *))
+{
+    if (heap == NULL)
+    {
         return;
     }
 
-    if (heap->heap_size == heap->capacity) {
+    if (heap->heap_size == heap->capacity)
+    {
         return;
     }
 
@@ -131,15 +146,18 @@ void heap_add(minheap* heap, void* data, size_t size, int (*compar)(const void *
     int child = heap->heap_size - 1;
     int parent = (heap->heap_size - 2) / 2;
 
-    while ((*compar)(heap->elements[child], heap->elements[parent]) > 0) {
+    while ((*compar)(heap->elements[child], heap->elements[parent]) > 0)
+    {
         swap(heap->elements[child], heap->elements[parent], size);
         child = parent;
         parent = (parent - 1) / 2;
     }
 }
 
-void* get_max(minheap* heap) {
-    if (heap == NULL) {
+void *get_max(minheap *heap)
+{
+    if (heap == NULL)
+    {
         return NULL;
     }
 
@@ -155,12 +173,14 @@ void* get_max(minheap* heap) {
  * 
  * @return the largest item in a void *
  */
-void* delete_max(minheap* heap, size_t size, int (*compar)(const void *, const void *)) {
-    if (heap == NULL) {
+void *delete_max(minheap *heap, size_t size, int (*compar)(const void *, const void *))
+{
+    if (heap == NULL)
+    {
         return NULL;
     }
 
-    void* found = malloc(sizeof(void *));
+    void *found = malloc(sizeof(void *));
     memcpy(found, heap->elements[0], size);
 
     swap(heap->elements[0], heap->elements[heap->heap_size - 1], size);

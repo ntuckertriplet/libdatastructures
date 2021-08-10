@@ -10,9 +10,11 @@
  * @param queue the queue to query
  * 
  * @returns an integer 1 if it is empty, 0 if it is not
- */ 
-int is_empty(queue* queue) {
-    if (queue->size == 0) {
+ */
+int is_empty(queue *queue)
+{
+    if (queue->size == 0)
+    {
         return 1;
     }
 
@@ -25,9 +27,11 @@ int is_empty(queue* queue) {
  * @param queue the queue to query
  * 
  * @returns an integer 1 if it is full, 0 if it is not
- */ 
-int is_full(queue* queue) {
-    if (queue->size == queue->capacity) {
+ */
+int is_full(queue *queue)
+{
+    if (queue->size == queue->capacity)
+    {
         return 1;
     }
 
@@ -40,8 +44,9 @@ int is_full(queue* queue) {
  * @param queue the queue to peek
  * 
  * @returns the void* item at the front of the queue
- */ 
-void* peek(queue* queue) {
+ */
+void *peek(queue *queue)
+{
     return queue->elements[queue->front];
 }
 
@@ -51,9 +56,11 @@ void* peek(queue* queue) {
  * @param q the queue to add to
  * @param data the data to add to the queue
  * @param size the size_t of the data to add
- */ 
-void enqueue(queue* q, void* data, size_t size) {
-    if (!is_full(q)) {
+ */
+void enqueue(queue *q, void *data, size_t size)
+{
+    if (!is_full(q))
+    {
         memcpy(q->elements[q->rear], data, size);
         q->rear++;
         q->size++;
@@ -68,11 +75,13 @@ void enqueue(queue* q, void* data, size_t size) {
  * 
  * @returns the data in a void*
  */
-void* dequeue(queue* queue, size_t size) {
-    void* dequeue = malloc(sizeof(size));
+void *dequeue(queue *queue, size_t size)
+{
+    void *dequeue = malloc(sizeof(size));
     memcpy(dequeue, queue->elements[queue->front], size);
 
-    if (queue->front == queue->capacity) {
+    if (queue->front == queue->capacity)
+    {
         return NULL;
     }
 

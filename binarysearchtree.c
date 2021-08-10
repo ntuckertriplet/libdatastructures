@@ -12,10 +12,14 @@
  * 
  * @returns the minimum value node in the binary search tree
  */
-tree_node* _find_minimum(tree_node* root) {
-    if (root == NULL) {
+tree_node *_find_minimum(tree_node *root)
+{
+    if (root == NULL)
+    {
         return NULL;
-    } else if (root->left != NULL) {
+    }
+    else if (root->left != NULL)
+    {
         return _find_minimum(root->left);
     }
 
@@ -31,13 +35,19 @@ tree_node* _find_minimum(tree_node* root) {
  * 
  * @returns a tree node with the value that equals the passed in data.
  * NOTE: this will return the FIRST occurrence of the data, not all, not the last
- */ 
-tree_node* _search(tree_node* root, void* data, int (*compar)(const void *, const void*)) {
-    if (root == NULL || (*compar)(root->data, data) == 0) {
+ */
+tree_node *_search(tree_node *root, void *data, int (*compar)(const void *, const void *))
+{
+    if (root == NULL || (*compar)(root->data, data) == 0)
+    {
         return root;
-    } else if ((*compar)(root->data, data) < 0) {
+    }
+    else if ((*compar)(root->data, data) < 0)
+    {
         return _search(root->right, data, (*compar));
-    } else {
+    }
+    else
+    {
         return _search(root->left, data, (*compar));
     }
 }
@@ -52,8 +62,9 @@ tree_node* _search(tree_node* root, void* data, int (*compar)(const void *, cons
  * @returns a tree node with the value that equals the passed in data.
  * NOTE: this will return the FIRST occurrence of the data, not all, not the last
  * NOTE: this will call _search, a helper, recursive method to search properly
- */ 
-tree_node* search(bst* tree, void* data, int (*compar)(const void *, const void*)) {
+ */
+tree_node *search(bst *tree, void *data, int (*compar)(const void *, const void *))
+{
     return _search(tree->root, data, (*compar));
 }
 
@@ -67,27 +78,40 @@ tree_node* search(bst* tree, void* data, int (*compar)(const void *, const void*
  * @returns a deleted tree node with the value that equals the passed in data.
  * NOTE: this will delete the FIRST occurrence of the data, not all.
  *       repeat calls to _delete are required if you want to delete every occurrence of the data
- */ 
-tree_node* _delete(tree_node* root, void* data, size_t size, int (*compar)(const void *, const void*)) {
-    if (root == NULL) {
+ */
+tree_node *_delete(tree_node *root, void *data, size_t size, int (*compar)(const void *, const void *))
+{
+    if (root == NULL)
+    {
         return NULL;
     }
-    
-    if ((*compar)(root->data, data) < 0) {
+
+    if ((*compar)(root->data, data) < 0)
+    {
         memcpy(root->right, _delete(root->right, data, size, (*compar)), size);
-    } else if ((*compar)(root->data, data) > 0) {
+    }
+    else if ((*compar)(root->data, data) > 0)
+    {
         memcpy(root->left, _delete(root->left, data, size, (*compar)), size);
-    } else {
-        if (root->left == NULL && root->right == NULL) {
+    }
+    else
+    {
+        if (root->left == NULL && root->right == NULL)
+        {
             free(root->data);
             free(root);
-            return NULL;   
-        } else if (root->left == NULL || root->right == NULL) {
-            tree_node* temp;
-            if (root->left == NULL) {
+            return NULL;
+        }
+        else if (root->left == NULL || root->right == NULL)
+        {
+            tree_node *temp;
+            if (root->left == NULL)
+            {
                 temp = root->right;
                 free(root->right);
-            } else {
+            }
+            else
+            {
                 temp = root->left;
                 free(root->left);
             }
@@ -95,8 +119,10 @@ tree_node* _delete(tree_node* root, void* data, size_t size, int (*compar)(const
             free(root->data);
             free(root);
             return temp;
-        } else {
-            tree_node* temp = _find_minimum(root->right);
+        }
+        else
+        {
+            tree_node *temp = _find_minimum(root->right);
             temp->data = malloc(size);
             memcpy(temp->data, root->data, size);
             root->right = _delete(root->right, temp->data, size, (*compar));
@@ -115,8 +141,9 @@ tree_node* _delete(tree_node* root, void* data, size_t size, int (*compar)(const
  * NOTE: this will delete the FIRST occurrence of the data, not all.
  *       repeat calls to delete are required if you want to delete every occurrence of the data
  * NOTE: this will call the helper _delete method to recurse through the tree
- */ 
-tree_node* delete(bst* tree, void* data, size_t size, int (*compar)(const void *, const void*)) {
+ */
+tree_node *delete (bst *tree, void *data, size_t size, int (*compar)(const void *, const void *))
+{
     tree->size--;
     return _delete(tree->root, data, size, (*compar));
 }
@@ -129,16 +156,22 @@ tree_node* delete(bst* tree, void* data, size_t size, int (*compar)(const void *
  *               format for comparators can be found in comparator.c
  * 
  * @returns an added tree node with the value that equals the passed in data.
- */ 
-tree_node* _insert(tree_node* root, void* data, size_t size, int (*compar)(const void *, const void*)) {
-    if (root == NULL) {
-        tree_node* new = malloc(sizeof(tree_node));
+ */
+tree_node *_insert(tree_node *root, void *data, size_t size, int (*compar)(const void *, const void *))
+{
+    if (root == NULL)
+    {
+        tree_node *new = malloc(sizeof(tree_node));
         new->data = malloc(size);
         memcpy(new->data, data, size);
         return new;
-    } else if ((*compar)(root->data, data) < 0) {
+    }
+    else if ((*compar)(root->data, data) < 0)
+    {
         _insert(root->right, data, size, (*compar));
-    } else {
+    }
+    else
+    {
         _insert(root->left, data, size, (*compar));
     }
 
@@ -154,8 +187,9 @@ tree_node* _insert(tree_node* root, void* data, size_t size, int (*compar)(const
  * 
  * @returns an added tree node with the value that equals the passed in data.
  * NOTE: this will call the helper _insert method to recurse through the tree
- */ 
-tree_node* insert(bst* tree, void* data, size_t size, int (*compar)(const void *, const void*)) {
+ */
+tree_node *insert(bst *tree, void *data, size_t size, int (*compar)(const void *, const void *))
+{
     tree->size++;
     return _insert(tree->root, data, size, (*compar));
 }
@@ -167,8 +201,9 @@ tree_node* insert(bst* tree, void* data, size_t size, int (*compar)(const void *
  * @param num_elems the number of nodes in the tree
  * 
  * @returns a *void[] containing all the data of the tree inorder
- */ 
-void** _inorder(tree_node* root, size_t size, int num_elems) {
+ */
+void **_inorder(tree_node *root, size_t size, int num_elems)
+{
     return NULL;
 }
 
@@ -178,7 +213,8 @@ void** _inorder(tree_node* root, size_t size, int num_elems) {
  * @param size the size_t of the data in the tree
  * 
  * @returns a *void[] containing all the data of the tree inorder
- */ 
-void** inorder(bst* tree, size_t size) {
+ */
+void **inorder(bst *tree, size_t size)
+{
     return _inorder(tree->root, size, tree->size);
 }
